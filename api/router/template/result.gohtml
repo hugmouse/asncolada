@@ -2,27 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ASN Colada - {{ if .RawOutput.IP }} {{ .RawOutput.IP }} {{ else }} AS{{ .RawOutput.ASN }} {{ end }}</title>
+    <title>ASN Colada - {{ if .RawOutput.IP }} {{ .RawOutput.IP }} {{ else }} {{ .RawOutput.ASN }} {{ end }}</title>
     <link rel="stylesheet" href="/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div class="center">
-        <h1>
-            <a href="/">< </a>
-            {{ if .RawOutput.IP }}
-                {{ .RawOutput.IP }}
-            {{ else }}
-                AS{{ .RawOutput.ASN }}
-            {{ end }}
-        </h1>
-        <p>Name: {{ .RawOutput.Name.Raw }}</p>
-        <p>Country: {{ .RawOutput.Country }}</p>
-        <p>Registry: {{ .RawOutput.Registry }}</p>
-        <p>Allocated at: {{ .RawOutput.AllocatedAt }}</p>
-        <hr>
-        <p>Raw output:</p>
-        <pre>{{ .RawOutput }}</pre>
-    </div>
+<div class="center">
+    <h1>
+        <a href="/" style="text-decoration: none;">< </a>
+        {{ if .RawOutput.IP }}
+            {{ .RawOutput.IP }}
+        {{ else }}
+            {{ .RawOutput.ASN }}
+        {{ end }}
+    </h1>
+    <p>Name: {{ .RawOutput.Name.Raw }}</p>
+    <p>Country: {{ .RawOutput.Country }}</p>
+    <p>Registry: {{ .RawOutput.Registry }}</p>
+    <p>Allocated at: {{ .RawOutput.AllocatedAt }}</p>
+    <hr>
+    <p>Raw output:</p>
+    <pre>{{ .RawOutput }}</pre>
+</div>
+
+<footer>
+    <p>
+        Powered by Team Cymru ASN, Vercel and IPISP package.
+        <a href="https://github.com/hugmouse/asncolada/blob/dev/go.mod">More info about package used and licenses</a>.
+        Made by <a href="https://github.com/hugmouse">Mysh!</a>
+    </p>
+</footer>
 </body>
 </html>
