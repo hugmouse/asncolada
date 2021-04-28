@@ -12,7 +12,7 @@ import (
 )
 
 //go:embed template/result.gohtml
-var cumtemplate string
+var ASNIPTemplate string
 
 // Handler for routing.
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -48,7 +48,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer client.Close()
 
-	tmpl, err := template.New("result").Parse(cumtemplate)
+	tmpl, err := template.New("result").Parse(ASNIPTemplate)
 	if err != nil {
 		_, _ = w.Write([]byte(err.Error()))
 		return
@@ -75,6 +75,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 
 	} else {
+		if bytes.ContainsAny(splittedURL[1], "ASas") {
+			splittedURL[1] = splittedURL[1][2:]
+		}
 		asnNum, err := strconv.Atoi(string(splittedURL[1]))
 		if err != nil {
 			_, _ = w.Write([]byte(err.Error()))
