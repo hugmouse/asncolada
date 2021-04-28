@@ -3,7 +3,6 @@ package handler
 import (
 	"bytes"
 	_ "embed" // go:embed requires import of "embed"
-	"fmt"
 	"github.com/ammario/ipisp"
 	"html/template"
 	"io/ioutil"
@@ -15,7 +14,7 @@ import (
 //go:embed template/result.gohtml
 var cumtemplate string
 
-// Handler for routing
+// Handler for routing.
 func Handler(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)
@@ -49,6 +48,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer client.Close()
 
+	tmpl, err := template.New("result").Parse(cumtemplate)
+	if err != nil {
+		_, _ = w.Write([]byte(err.Error()))
+		return
+	}
+
 	// Detecting what we need to do: IP or ASN queue
 	if bytes.ContainsRune(splittedURL[1], '.') {
 		resp, err := client.LookupIP(net.ParseIP(string(splittedURL[1])))
@@ -56,17 +61,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			_, _ = w.Write([]byte(err.Error()))
 			return
 		}
-		_, err = w.Write([]byte(fmt.Sprintf("Resolved IP: %+v\n", resp)))
-		if err != nil {
-			_, _ = w.Write([]byte(err.Error()))
-			return
-		}
 
-		tmpl, err := template.New("result").Parse(cumtemplate)
-		if err != nil {
-			_, _ = w.Write([]byte(err.Error()))
-			return
-		}
+		w.Header().Set("Content-type", "text/html; charset=UTF-8")
 		err = tmpl.Execute(w, struct {
 			IPorASN   string
 			RawOutput *ipisp.Response
@@ -74,6 +70,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			IPorASN:   resp.IP.String(),
 			RawOutput: resp,
 		})
+
 		if err != nil {
 			_, _ = w.Write([]byte(err.Error()))
 			return
@@ -90,10 +87,19 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			_, _ = w.Write([]byte(err.Error()))
 			return
 		}
-		_, err = w.Write([]byte(fmt.Sprintf("Resolved ASN: %+v\n", resp)))
+
+		w.Header().Set("Content-type", "text/html; charset=UTF-8")
+		err = tmpl.Execute(w, struct {
+			IPorASN   string
+			RawOutput *ipisp.Response
+		}{
+			IPorASN:   resp.IP.String(),
+			RawOutput: resp,
+		})
 		if err != nil {
 			_, _ = w.Write([]byte(err.Error()))
 			return
 		}
+
 	}
 }
