@@ -2,13 +2,18 @@ package handler
 
 import (
 	"bytes"
+	_ "embed" // go:embed requires import of "embed"
 	"fmt"
 	"github.com/ammario/ipisp"
+	"html/template"
 	"io/ioutil"
 	"net"
 	"net/http"
 	"strconv"
 )
+
+//go:embed template/result.gohtml
+var cumtemplate string
 
 // Handler for routing
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -56,6 +61,24 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			_, _ = w.Write([]byte(err.Error()))
 			return
 		}
+
+		tmpl, err := template.New("result").Parse(cumtemplate)
+		if err != nil {
+			_, _ = w.Write([]byte(err.Error()))
+			return
+		}
+		err = tmpl.Execute(w, struct {
+			IPorASN   string
+			RawOutput *ipisp.Response
+		}{
+			IPorASN:   resp.IP.String(),
+			RawOutput: resp,
+		})
+		if err != nil {
+			_, _ = w.Write([]byte(err.Error()))
+			return
+		}
+
 	} else {
 		asnNum, err := strconv.Atoi(string(splittedURL[1]))
 		if err != nil {
