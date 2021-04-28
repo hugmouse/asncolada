@@ -3,6 +3,7 @@ package handler
 import (
 	"bytes"
 	_ "embed" // go:embed requires import of "embed"
+	"encoding/json"
 	"github.com/ammario/ipisp"
 	"html/template"
 	"io/ioutil"
@@ -63,10 +64,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		w.Header().Set("Content-type", "text/html; charset=UTF-8")
+		JSON, err := json.MarshalIndent(resp, "", "\t")
 		err = tmpl.Execute(w, struct {
 			RawOutput *ipisp.Response
+			JSON      []byte
 		}{
 			RawOutput: resp,
+			JSON:      JSON,
 		})
 
 		if err != nil {
@@ -90,10 +94,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		w.Header().Set("Content-type", "text/html; charset=UTF-8")
+		JSON, err := json.MarshalIndent(resp, "", "\t")
 		err = tmpl.Execute(w, struct {
 			RawOutput *ipisp.Response
+			JSON      []byte
 		}{
 			RawOutput: resp,
+			JSON:      JSON,
 		})
 		if err != nil {
 			_, _ = w.Write([]byte(err.Error()))
