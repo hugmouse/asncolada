@@ -8,6 +8,13 @@
     --fontSize: 24px;
 }
 
+div.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 pre {
     font-family: monospace;
     color: var(--darkPreColor);
