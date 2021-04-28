@@ -19,7 +19,15 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	splittedURL := bytes.Split(body, []byte("="))
-	if len(splittedURL) == 1 || len(splittedURL[1]) == 0 {
+
+	if len(splittedURL) < 2 {
+		_, err := w.Write([]byte("bruh"))
+		if err != nil {
+			_, _ = w.Write([]byte(err.Error()))
+		}
+	}
+
+	if len(splittedURL[1]) == 0 {
 		_, err := w.Write([]byte("bruh"))
 		if err != nil {
 			_, _ = w.Write([]byte(err.Error()))
