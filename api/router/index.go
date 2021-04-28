@@ -67,10 +67,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		JSON, err := json.MarshalIndent(resp, "", "\t")
 		err = tmpl.Execute(w, struct {
 			RawOutput *ipisp.Response
-			JSON      []byte
+			JSON      string
 		}{
 			RawOutput: resp,
-			JSON:      JSON,
+			JSON:      string(JSON),
 		})
 
 		if err != nil {
@@ -97,10 +97,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		JSON, err := json.MarshalIndent(resp, "", "\t")
 		err = tmpl.Execute(w, struct {
 			RawOutput *ipisp.Response
-			JSON      []byte
+			JSON      string
 		}{
 			RawOutput: resp,
-			JSON:      JSON,
+			JSON:      string(JSON),
 		})
 		if err != nil {
 			_, _ = w.Write([]byte(err.Error()))
