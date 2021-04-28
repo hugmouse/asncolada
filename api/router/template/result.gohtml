@@ -11,7 +11,7 @@
     <h1>
         <a href="/" style="text-decoration: none;">< </a>
         {{ if .RawOutput.IP }}
-            {{ .RawOutput.IP }}
+            {{ .RawOutput.IP }} ({{ .RawOutput.Range }})
         {{ else }}
             {{ .RawOutput.ASN }}
         {{ end }}
