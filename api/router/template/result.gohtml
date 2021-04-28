@@ -2,11 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ASN Colada - {{ .IPorASN }}</title>
+    <title>ASN Colada - {{ if .RawOutput.IP }} {{ .RawOutput.IP }} {{ else }} AS{{ .RawOutput.ASN }} {{ end }}</title>
     <link rel="stylesheet" href="/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+    {{ if .RawOutput.IP }}
+        {{ .RawOutput.IP }}
+    {{ else }}
+        AS{{ .RawOutput.ASN }}
+    {{ end }}
+    <p>Name: {{ .RawOutput.Name.Raw }}</p>
+    <p>Country: {{ .RawOutput.Country }}</p>
+    <p>Registry: {{ .RawOutput.Registry }}</p>
+    <p>Allocated at: {{ .RawOutput.AllocatedAt }}</p>
+    <hr>
+    <p>Raw output:</p>
     <pre>{{ .RawOutput }}</pre>
 </body>
 </html>

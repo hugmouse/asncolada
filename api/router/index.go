@@ -64,10 +64,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 		w.Header().Set("Content-type", "text/html; charset=UTF-8")
 		err = tmpl.Execute(w, struct {
-			IPorASN   string
 			RawOutput *ipisp.Response
 		}{
-			IPorASN:   resp.IP.String(),
 			RawOutput: resp,
 		})
 
@@ -90,10 +88,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 		w.Header().Set("Content-type", "text/html; charset=UTF-8")
 		err = tmpl.Execute(w, struct {
-			IPorASN   string
 			RawOutput *ipisp.Response
 		}{
-			IPorASN:   resp.IP.String(),
 			RawOutput: resp,
 		})
 		if err != nil {

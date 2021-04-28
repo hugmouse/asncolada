@@ -1,10 +1,18 @@
 :root {
     --darkBackground: black;
     --darkBackgroundElement: #232323;
+    --darkPreColor: #b3b3b3;
     --darkAccent: white;
     --darkTextAccent: white;
     --darkText: white;
     --fontSize: 24px;
+}
+
+pre {
+    font-family: monospace;
+    color: var(--darkPreColor);
+    background-color: var(--darkBackgroundElement);
+    padding: 1em;
 }
 
 footer {
@@ -20,7 +28,7 @@ footer p {
     padding: 1em;
 }
 
-a, span, p {
+a, span, p, h1, h2, h3, h4, h5 {
     color: var(--darkText);
 }
 
