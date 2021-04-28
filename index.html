@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ASN Colada</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="wrap">
+    <p>The ASNColada is a service to help you find information about IPs and ASNs</p>
+    <div class="search">
+        <form tabindex="1" method="post" action="/pina" enctype="application/x-www-form-urlencoded" autocomplete="off">
+            <input tabindex="2" class="searchTerm" id="ipasn" name="q" type="text" placeholder="Search for IP or ASN">
+            <button tabindex="3" type="submit" class="searchButton"><b>></b></button>
+        </form>
+    </div>
+</div>
+<footer>
+    <p>
+        Powered by Team Cymru ASN, Vercel and IPISP package.
+        <a href="https://github.com/hugmouse/asncolada/blob/dev/go.mod">More info about package used and licenses</a>.
+        Made by <a href="https://github.com/hugmouse">Mysh!</a>
+    </p>
+</footer>
+</body>
+</html>

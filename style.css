@@ -1,0 +1,97 @@
+:root {
+    --darkBackground: black;
+    --darkBackgroundElement: #232323;
+    --darkPreColor: #b3b3b3;
+    --darkAccent: white;
+    --darkTextAccent: white;
+    --darkText: white;
+    --fontSize: 24px;
+}
+
+pre {
+    font-family: monospace;
+    color: var(--darkPreColor);
+    background-color: var(--darkBackgroundElement);
+    padding: 1em;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: justify;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+}
+
+footer p {
+    padding: 1em;
+}
+
+a, span, p, h1, h2, h3, h4, h5 {
+    color: var(--darkText);
+}
+
+form {
+    display: contents;
+}
+
+.search {
+    width: 100%;
+    position: relative;
+    display: flex;
+}
+
+.searchTerm {
+    width: 100%;
+    border-right: none!important;
+    padding: 1em;
+    height: 0.2em;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    font-size: 18px;
+}
+
+.searchButton {
+    width: 2em;
+    text-align: center;
+    border-left: none!important;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.wrap {
+    width: 80%;
+    max-width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*@media (prefers-color-scheme: dark) {*/
+    body {
+        background: var(--darkBackground);
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    .searchTerm {
+        border: 2px solid var(--darkAccent);
+        color: var(--darkTextAccent);
+        background-color: var(--darkBackgroundElement);
+    }
+
+    :focus {
+        color: var(--darkTextAccent);
+    }
+
+    .searchButton {
+        border: 2px solid var(--darkAccent);
+        background: var(--darkBackgroundElement);
+        color: var(--darkAccent);
+    }
+/*}*/
