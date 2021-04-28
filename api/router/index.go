@@ -16,6 +16,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		_, _ = w.Write([]byte(err.Error()))
+		return
 	}
 
 	splittedURL := bytes.Split(body, []byte("="))
@@ -25,6 +26,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			_, _ = w.Write([]byte(err.Error()))
 		}
+		return
 	}
 
 	if len(splittedURL[1]) == 0 {
@@ -32,11 +34,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			_, _ = w.Write([]byte(err.Error()))
 		}
+		return
 	}
 
 	client, err := ipisp.NewDNSClient()
 	if err != nil {
 		_, _ = w.Write([]byte(err.Error()))
+		return
 	}
 	defer client.Close()
 
@@ -45,23 +49,28 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		resp, err := client.LookupIP(net.ParseIP(string(splittedURL[1])))
 		if err != nil {
 			_, _ = w.Write([]byte(err.Error()))
+			return
 		}
 		_, err = w.Write([]byte(fmt.Sprintf("Resolved IP: %+v\n", resp)))
 		if err != nil {
 			_, _ = w.Write([]byte(err.Error()))
+			return
 		}
 	} else {
 		asnNum, err := strconv.Atoi(string(splittedURL[1]))
 		if err != nil {
 			_, _ = w.Write([]byte(err.Error()))
+			return
 		}
 		resp, err := client.LookupASN(ipisp.ASN(asnNum))
 		if err != nil {
 			_, _ = w.Write([]byte(err.Error()))
+			return
 		}
 		_, err = w.Write([]byte(fmt.Sprintf("Resolved ASN: %+v\n", resp)))
 		if err != nil {
 			_, _ = w.Write([]byte(err.Error()))
+			return
 		}
 	}
 }
