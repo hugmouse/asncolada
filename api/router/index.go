@@ -64,7 +64,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		w.Header().Set("Content-type", "text/html; charset=UTF-8")
-		JSON, err := json.MarshalIndent(resp, "", "\t")
+		JSON, err := json.MarshalIndent(resp, "", "  ")
+		if err != nil {
+			_, _ = w.Write([]byte(err.Error()))
+			return
+		}
+
 		err = tmpl.Execute(w, struct {
 			RawOutput *ipisp.Response
 			JSON      string
@@ -94,7 +99,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		w.Header().Set("Content-type", "text/html; charset=UTF-8")
-		JSON, err := json.MarshalIndent(resp, "", "\t")
+		JSON, err := json.MarshalIndent(resp, "", "  ")
+		if err != nil {
+			_, _ = w.Write([]byte(err.Error()))
+			return
+		}
+
 		err = tmpl.Execute(w, struct {
 			RawOutput *ipisp.Response
 			JSON      string
